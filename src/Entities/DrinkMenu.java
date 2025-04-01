@@ -1,13 +1,14 @@
 package Entities;
 
-import java.util.List;
 
 public class DrinkMenu {
     private int idCatalog;
     private String name;
     private Event evento;
 
-    public DrinkMenu(int idCatalog, String name, List<Drink> drink, Event evento) {
+    
+
+    public DrinkMenu(int idCatalog, String name, Event evento) {
         this.idCatalog = idCatalog;
         this.name = name;
         this.evento = evento;

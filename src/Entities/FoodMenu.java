@@ -1,12 +1,12 @@
 package Entities;
-import java.util.List;
 
 public class FoodMenu {
     private int idCatalog;
     private String name;
     private Event evento;
     
-    public FoodMenu(int idCatalog, String name, List<Food> comida, Event evento) {
+   
+    public FoodMenu(int idCatalog, String name, Event evento) {
         this.idCatalog = idCatalog;
         this.name = name;
         this.evento = evento;
