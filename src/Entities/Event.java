@@ -15,9 +15,10 @@ import java.time.LocalTime;
     private String eventStatus;
     private FoodMenu foodMenu;
     private List<Drink> drinks;
+    private Customer client;
 
     public Event(int eventId, String eventCode, String eventName, double price, LocalTime endTime, int maxCapacity,
-            int minCapacity, String eventStatus, FoodMenu foodMenu, List<Drink> drinks) {
+            int minCapacity, String eventStatus, FoodMenu foodMenu, List<Drink> drinks, Customer client) {
         this.eventId = eventId;
         this.eventCode = eventCode;
         EventName = eventName;
@@ -28,6 +29,7 @@ import java.time.LocalTime;
         this.eventStatus = eventStatus;
         this.foodMenu = foodMenu;
         this.drinks = drinks;
+        this.client = client;
     }
 
     public int getEventId() {
@@ -105,13 +107,23 @@ import java.time.LocalTime;
     public List<Drink> getDrinks() {
         return drinks;
     }
-    
+
     public void setDrinks(List<Drink> drinks) {
         this.drinks = drinks;
     }
+
+    public Customer getClient() {
+        return client;
+    }
+
+    public void setClient(Customer client) {
+        this.client = client;
+    }
+
     
-   
-     
+
+    
+    
   
 }
 

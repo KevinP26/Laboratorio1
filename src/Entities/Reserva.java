@@ -6,11 +6,13 @@ public class Reserva {
     private String reserveNumber;
     private LocalDateTime reserveDate;
     private String reserveStatus;
-
-    public Reserva(String reserveNumber, LocalDateTime reserveDate, String reserveStatus) {
+    private Customer client;
+    
+    public Reserva(String reserveNumber, LocalDateTime reserveDate, String reserveStatus, Customer client) {
         this.reserveNumber = reserveNumber;
         this.reserveDate = reserveDate;
         this.reserveStatus = reserveStatus;
+        this.client = client;
     }
 
     public String getReserveNumber() {
@@ -36,6 +38,13 @@ public class Reserva {
     public void setReserveStatus(String reserveStatus) {
         this.reserveStatus = reserveStatus;
     }
-    
+
+    public Customer getClient() {
+        return client;
+    }
+
+    public void setClient(Customer client) {
+        this.client = client;
+    }
 
 }

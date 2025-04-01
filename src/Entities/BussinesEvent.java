@@ -10,10 +10,14 @@ public class BussinesEvent extends Event{
     private double advancePayment;
     private boolean dessert;
     
+   
+
     public BussinesEvent(int eventId, String eventCode, String eventName, double price, LocalTime endTime,
             int maxCapacity, int minCapacity, String eventStatus, FoodMenu foodMenu, List<Drink> drinks,
-            String companyName, String colorTheme, String dressCode, double advancePayment, boolean dessert) {
-        super(eventId, eventCode, eventName, price, endTime, maxCapacity, minCapacity, eventStatus, foodMenu, drinks);
+            Customer client, String companyName, String colorTheme, String dressCode, double advancePayment,
+            boolean dessert) {
+        super(eventId, eventCode, eventName, price, endTime, maxCapacity, minCapacity, eventStatus, foodMenu, drinks,
+                client);
         this.companyName = companyName;
         this.colorTheme = colorTheme;
         this.dressCode = dressCode;

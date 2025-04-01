@@ -8,12 +8,13 @@ public class BirthdayEvent extends Event {
     private String celebrantFavoriteColor;
     private String GiftMethod;
     private double advancePayment;
-
+    
     public BirthdayEvent(int eventId, String eventCode, String eventName, double price, LocalTime endTime,
             int maxCapacity, int minCapacity, String eventStatus, FoodMenu foodMenu, List<Drink> drinks,
-            String celebrantName, String celebrantAge, String celebrantFavoriteColor, String giftMethod,
-            double advancePayment) {
-        super(eventId, eventCode, eventName, price, endTime, maxCapacity, minCapacity, eventStatus, foodMenu, drinks);
+            Customer client, String celebrantName, String celebrantAge, String celebrantFavoriteColor,
+            String giftMethod, double advancePayment) {
+        super(eventId, eventCode, eventName, price, endTime, maxCapacity, minCapacity, eventStatus, foodMenu, drinks,
+                client);
         this.celebrantName = celebrantName;
         this.celebrantAge = celebrantAge;
         this.celebrantFavoriteColor = celebrantFavoriteColor;

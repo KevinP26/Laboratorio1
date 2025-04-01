@@ -6,10 +6,13 @@ public class FamilyEvent extends Event {
     private String familyLastName;
     private String MealType;
 
+    
+
     public FamilyEvent(int eventId, String eventCode, String eventName, double price, LocalTime endTime,
             int maxCapacity, int minCapacity, String eventStatus, FoodMenu foodMenu, List<Drink> drinks,
-            String familyLastName, String mealType) {
-        super(eventId, eventCode, eventName, price, endTime, maxCapacity, minCapacity, eventStatus, foodMenu, drinks);
+            Customer client, String familyLastName, String mealType) {
+        super(eventId, eventCode, eventName, price, endTime, maxCapacity, minCapacity, eventStatus, foodMenu, drinks,
+                client);
         this.familyLastName = familyLastName;
         MealType = mealType;
     }
@@ -30,6 +33,5 @@ public class FamilyEvent extends Event {
         MealType = mealType;
     }
 
-    
 
 }

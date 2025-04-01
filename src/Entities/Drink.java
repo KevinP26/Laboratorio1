@@ -1,17 +1,16 @@
 package Entities;
-import java.util.List;
 
 public class Drink {
     private int idDrink;
     private String name;
     private String description;
-    private List<Event> events;
+    private DrinkMenu drinkMenu;
     
-    public Drink(int idDrink, String name, String description, List<Event> events) {
+    public Drink(int idDrink, String name, String description, DrinkMenu drinkMenu) {
         this.idDrink = idDrink;
         this.name = name;
         this.description = description;
-        this.events = events;
+        this.drinkMenu = drinkMenu;
     }
 
     public int getIdDrink() {
@@ -38,14 +37,13 @@ public class Drink {
         this.description = description;
     }
 
-    public List<Event> getEvents() {
-        return events;
+    public DrinkMenu getDrinkMenu() {
+        return drinkMenu;
     }
 
-    public void setEvents(List<Event> events) {
-        this.events = events;
+    public void setDrinkMenu(DrinkMenu drinkMenu) {
+        this.drinkMenu = drinkMenu;
     }
-
-   
+ 
     
 }

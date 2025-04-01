@@ -16,5 +16,5 @@ public class Employee extends Customer {
         this.workPlace = workPlace;
     }
  
-    
+
 }
