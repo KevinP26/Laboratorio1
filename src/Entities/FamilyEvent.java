@@ -1,0 +1,36 @@
+package Entities;
+import java.time.LocalDateTime;
+import java.util.List;
+
+public class FamilyEvent extends Event {
+    private String familyLastName;
+    private String MealType;
+    
+    public FamilyEvent(int eventId, String eventCode, String eventName, double price, LocalDateTime startTime,
+            LocalDateTime endTime, int maxCapacity, int minCapacity, String eventStatus, FoodMenu foodMenu,
+            List<Drink> drinks, String familyLastName, String mealType) {
+        super(eventId, eventCode, eventName, price, startTime, endTime, maxCapacity, minCapacity, eventStatus, foodMenu,
+                drinks);
+        this.familyLastName = familyLastName;
+        MealType = mealType;
+    }
+
+    public String getFamilyLastName() {
+        return familyLastName;
+    }
+
+    public void setFamilyLastName(String familyLastName) {
+        this.familyLastName = familyLastName;
+    }
+
+    public String getMealType() {
+        return MealType;
+    }
+
+    public void setMealType(String mealType) {
+        MealType = mealType;
+    }
+    
+    
+
+}
