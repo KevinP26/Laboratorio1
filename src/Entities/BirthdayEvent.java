@@ -1,5 +1,5 @@
 package Entities;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public class BirthdayEvent extends Event {
@@ -9,12 +9,11 @@ public class BirthdayEvent extends Event {
     private String GiftMethod;
     private double advancePayment;
 
-    public BirthdayEvent(int eventId, String eventCode, String eventName, double price, LocalDateTime startTime,
-            LocalDateTime endTime, int maxCapacity, int minCapacity, String eventStatus, FoodMenu foodMenu,
-            List<Drink> drinks, String celebrantName, String celebrantAge, String celebrantFavoriteColor,
-            String giftMethod, double advancePayment) {
-        super(eventId, eventCode, eventName, price, startTime, endTime, maxCapacity, minCapacity, eventStatus, foodMenu,
-                drinks);
+    public BirthdayEvent(int eventId, String eventCode, String eventName, double price, LocalTime endTime,
+            int maxCapacity, int minCapacity, String eventStatus, FoodMenu foodMenu, List<Drink> drinks,
+            String celebrantName, String celebrantAge, String celebrantFavoriteColor, String giftMethod,
+            double advancePayment) {
+        super(eventId, eventCode, eventName, price, endTime, maxCapacity, minCapacity, eventStatus, foodMenu, drinks);
         this.celebrantName = celebrantName;
         this.celebrantAge = celebrantAge;
         this.celebrantFavoriteColor = celebrantFavoriteColor;
@@ -62,14 +61,5 @@ public class BirthdayEvent extends Event {
         this.advancePayment = advancePayment;
     }
 
-    
-
-    
-
-    
-
-    
-
-
-    
+   
 }

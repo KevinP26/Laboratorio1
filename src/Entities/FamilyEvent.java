@@ -1,16 +1,15 @@
 package Entities;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public class FamilyEvent extends Event {
     private String familyLastName;
     private String MealType;
-    
-    public FamilyEvent(int eventId, String eventCode, String eventName, double price, LocalDateTime startTime,
-            LocalDateTime endTime, int maxCapacity, int minCapacity, String eventStatus, FoodMenu foodMenu,
-            List<Drink> drinks, String familyLastName, String mealType) {
-        super(eventId, eventCode, eventName, price, startTime, endTime, maxCapacity, minCapacity, eventStatus, foodMenu,
-                drinks);
+
+    public FamilyEvent(int eventId, String eventCode, String eventName, double price, LocalTime endTime,
+            int maxCapacity, int minCapacity, String eventStatus, FoodMenu foodMenu, List<Drink> drinks,
+            String familyLastName, String mealType) {
+        super(eventId, eventCode, eventName, price, endTime, maxCapacity, minCapacity, eventStatus, foodMenu, drinks);
         this.familyLastName = familyLastName;
         MealType = mealType;
     }
@@ -30,7 +29,7 @@ public class FamilyEvent extends Event {
     public void setMealType(String mealType) {
         MealType = mealType;
     }
-    
+
     
 
 }

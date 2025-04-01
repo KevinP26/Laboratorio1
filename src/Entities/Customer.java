@@ -1,14 +1,14 @@
 package Entities;
 
-public class Custumer {
-    private int custumerId;
+public class Customer {
+    private int customerId;
     private String Name;
     private String DUI;
     private int age;
     private String phone;
     
-    public Custumer(int custumerId, String name, String dUI, int age, String phone) {
-        this.custumerId = custumerId;
+    public Customer(int customerId, String name, String dUI, int age, String phone) {
+        this.customerId = customerId;
         Name = name;
         DUI = dUI;
         this.age = age;
@@ -16,11 +16,11 @@ public class Custumer {
     }
 
     public int getCustumerId() {
-        return custumerId;
+        return customerId;
     }
 
     public void setCustumerId(int custumerId) {
-        this.custumerId = custumerId;
+        this.customerId = custumerId;
     }
 
     public String getName() {

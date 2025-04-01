@@ -1,6 +1,6 @@
 package Entities;
 
-public class Employee extends Custumer {
+public class Employee extends Customer {
     private String workPlace;
 
     public Employee(int custumerId, String name, String dUI, int age, String phone, String workPlace) {
@@ -15,8 +15,6 @@ public class Employee extends Custumer {
     public void setWorkPlace(String workPlace) {
         this.workPlace = workPlace;
     }
-
-
-    
+ 
     
 }

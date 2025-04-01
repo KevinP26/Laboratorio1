@@ -1,6 +1,6 @@
 package Entities;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.time.LocalTime;
 
 
  public abstract class Event{
@@ -9,22 +9,19 @@ import java.util.List;
     private String eventCode;
     private String EventName;
     private double price;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalTime endTime;
     private int maxCapacity;
     private int minCapacity;
     private String eventStatus;
     private FoodMenu foodMenu;
     private List<Drink> drinks;
-    
-    public Event(int eventId, String eventCode, String eventName, double price, LocalDateTime startTime,
-            LocalDateTime endTime, int maxCapacity, int minCapacity, String eventStatus, FoodMenu foodMenu,
-            List<Drink> drinks) {
+
+    public Event(int eventId, String eventCode, String eventName, double price, LocalTime endTime, int maxCapacity,
+            int minCapacity, String eventStatus, FoodMenu foodMenu, List<Drink> drinks) {
         this.eventId = eventId;
         this.eventCode = eventCode;
         EventName = eventName;
         this.price = price;
-        this.startTime = startTime;
         this.endTime = endTime;
         this.maxCapacity = maxCapacity;
         this.minCapacity = minCapacity;
@@ -65,19 +62,11 @@ import java.util.List;
         this.price = price;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -116,11 +105,12 @@ import java.util.List;
     public List<Drink> getDrinks() {
         return drinks;
     }
-
+    
     public void setDrinks(List<Drink> drinks) {
         this.drinks = drinks;
     }
-
+    
+   
      
   
 }
