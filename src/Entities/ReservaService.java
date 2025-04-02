@@ -8,14 +8,39 @@ import java.util.Scanner;
 
 public class ReservaService {
 
-    FoodMenu menuComidaNormal = MenuLoader.getMenuComidaNormal();
-    DrinkMenu menuBebidasNormal = MenuLoader.getMenuBebidasNormal();
-
     private List<Reserva> reservas = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
 
-    public void agendarReservaDesdeConsola() {
+    private FoodMenu menuComidaNormal = MenuLoader.getMenuComidaNormal();
+    private DrinkMenu menuBebidasNormal = MenuLoader.getMenuBebidasNormal();
+    private FoodMenu menuComidaEmpresarial = MenuLoader.getMenuComidaEmpresarial();
+    private DrinkMenu menuBebidasEmpresarial = MenuLoader.getMenuBebidasEmpresarial();
 
+    public void agendarReservaDesdeConsola() {
+        System.out.println("=== AGENDAR NUEVA RESERVA ===");
+        System.out.println("Tipo de evento:");
+        System.out.println("1. Cumpleaños");
+        System.out.println("2. Familiar");
+        System.out.println("3. Empresarial");
+        System.out.print("Seleccione una opción: ");
+        int tipo = Integer.parseInt(sc.nextLine());
+
+        switch (tipo) {
+            case 1:
+                agendarReservaCumple();
+                break;
+            case 2:
+                agendarReservaFamiliar();
+                break;
+            case 3:
+                System.out.println("⚠️ Evento empresarial aún no está implementado.");
+                break;
+            default:
+                System.out.println("❌ Opción no válida.");
+        }
+    }
+
+    public void agendarReservaCumple() {
         System.out.println("=== NUEVA RESERVA DE CUMPLEAÑOS ===");
 
         System.out.print("Nombre del cliente: ");
@@ -61,8 +86,6 @@ public class ReservaService {
             return;
         }
 
-        // Menu de la comida para la reserva
-
         System.out.println("Menú de comidas disponibles:");
         List<Food> comidas = menuComidaNormal.getItems();
         for (int i = 0; i < comidas.size(); i++) {
@@ -83,5 +106,79 @@ public class ReservaService {
 
         reservas.add(reserva);
         System.out.println("✅ Reserva registrada con éxito con ID: " + reserva.getIdReserva());
+    }
+
+    public void agendarReservaFamiliar() {
+        System.out.println("=== NUEVA RESERVA FAMILIAR ===");
+
+        System.out.print("Nombre del cliente: ");
+        String nombre = sc.nextLine();
+
+        System.out.print("DUI: ");
+        String dui = sc.nextLine();
+
+        System.out.print("Edad: ");
+        int edad = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Teléfono: ");
+        String telefono = sc.nextLine();
+
+        Customer cliente = new Customer(nombre, dui, edad, telefono);
+
+        System.out.print("Fecha del evento (yyyy-MM-dd): ");
+        LocalDate fecha = LocalDate.parse(sc.nextLine());
+
+        System.out.print("Hora de inicio (HH:mm): ");
+        LocalTime horaInicio = LocalTime.parse(sc.nextLine());
+
+        System.out.print("Hora de finalización (HH:mm): ");
+        LocalTime horaFin = LocalTime.parse(sc.nextLine());
+
+        System.out.print("Apellido de la familia: ");
+        String apellido = sc.nextLine();
+
+        System.out.print("Cantidad de personas (4-15): ");
+        int personas = Integer.parseInt(sc.nextLine());
+
+        if (personas < 4 || personas > 15) {
+            System.out.println("Cantidad inválida. Debe estar entre 4 y 15. Cancelando reserva.");
+            return;
+        }
+
+        System.out.println("Menú de comidas disponibles:");
+        List<Food> comidas = menuComidaNormal.getItems();
+        for (int i = 0; i < comidas.size(); i++) {
+            System.out.println((i + 1) + ". " + comidas.get(i).getNombre());
+        }
+        System.out.print("Seleccione una comida (1-" + comidas.size() + "): ");
+        int comidaIndex = Integer.parseInt(sc.nextLine()) - 1;
+        if (comidaIndex < 0 || comidaIndex >= comidas.size()) {
+            System.out.println("Opción inválida.");
+            return;
+        }
+        String comidaSeleccionada = comidas.get(comidaIndex).getNombre();
+
+        System.out.println("Bebidas disponibles (puede elegir varias separadas por coma):");
+        List<Drink> bebidas = menuBebidasNormal.getItems();
+        for (int i = 0; i < bebidas.size(); i++) {
+            System.out.println((i + 1) + ". " + bebidas.get(i).getNombre());
+        }
+        System.out.print("Seleccione las bebidas (ej: 1,3): ");
+        String[] indices = sc.nextLine().split(",");
+        List<String> bebidasSeleccionadas = new ArrayList<>();
+        for (String s : indices) {
+            int idx = Integer.parseInt(s.trim()) - 1;
+            if (idx >= 0 && idx < bebidas.size()) {
+                bebidasSeleccionadas.add(bebidas.get(idx).getNombre());
+            }
+        }
+
+        Event evento = new Event("FD-E-04", "Familiar", 200.0);
+
+        ReservaFamiliar reserva = new ReservaFamiliar(cliente, evento, fecha, horaInicio, horaFin,
+                apellido, personas, comidaSeleccionada, bebidasSeleccionadas);
+
+        reservas.add(reserva);
+        System.out.println("✅ Reserva familiar creada con ID: " + reserva.getIdReserva());
     }
 }

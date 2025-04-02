@@ -11,7 +11,7 @@ public class App {
 
         do {
             System.out.println("=== MENÚ PRINCIPAL ===");
-            System.out.println("1. Agendar reserva de cumpleaños");
+            System.out.println("1. Agendar nueva reserva");
             System.out.println("2. Salir");
             System.out.print("Seleccione una opción: ");
 
@@ -21,7 +21,7 @@ public class App {
             }
 
             opcion = sc.nextInt();
-            sc.nextLine(); // limpiar el buffer
+            sc.nextLine(); 
 
             switch (opcion) {
                 case 1:
