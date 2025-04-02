@@ -33,11 +33,95 @@ public class ReservaService {
                 agendarReservaFamiliar();
                 break;
             case 3:
-                System.out.println("⚠️ Evento empresarial aún no está implementado.");
+                agendarReservaEmpresarial();
                 break;
             default:
                 System.out.println("❌ Opción no válida.");
         }
+    }
+
+    public void agendarReservaEmpresarial() {
+        System.out.println("=== NUEVA RESERVA EMPRESARIAL ===");
+
+        System.out.print("Nombre del cliente: ");
+        String nombre = sc.nextLine();
+
+        System.out.print("DUI: ");
+        String dui = sc.nextLine();
+
+        System.out.print("Edad: ");
+        int edad = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Teléfono: ");
+        String telefono = sc.nextLine();
+
+        Customer cliente = new Customer(nombre, dui, edad, telefono);
+
+        System.out.print("Fecha del evento (yyyy-MM-dd): ");
+        LocalDate fecha = LocalDate.parse(sc.nextLine());
+
+        System.out.print("Hora de inicio (HH:mm): ");
+        LocalTime horaInicio = LocalTime.parse(sc.nextLine());
+
+        System.out.print("Hora de finalización (HH:mm): ");
+        LocalTime horaFin = LocalTime.parse(sc.nextLine());
+
+        System.out.print("Nombre de la empresa: ");
+        String empresa = sc.nextLine();
+
+        System.out.print("Temática de colores: ");
+        String tematica = sc.nextLine();
+
+        System.out.print("Código de vestimenta: ");
+        String vestimenta = sc.nextLine();
+
+        System.out.print("¿Requiere postre? (true/false): ");
+        boolean postre = Boolean.parseBoolean(sc.nextLine());
+
+        System.out.print("Cantidad de personas (10-40): ");
+        int personas = Integer.parseInt(sc.nextLine());
+        if (personas < 10 || personas > 40) {
+            System.out.println("Cantidad fuera de rango. Reserva cancelada.");
+            return;
+        }
+
+        // Menú de comida empresarial
+        System.out.println("Menú de comidas empresariales:");
+        List<Food> comidas = menuComidaEmpresarial.getItems();
+        for (int i = 0; i < comidas.size(); i++) {
+            System.out.println((i + 1) + ". " + comidas.get(i).getNombre());
+        }
+        System.out.print("Seleccione una comida (1-" + comidas.size() + "): ");
+        int comidaIndex = Integer.parseInt(sc.nextLine()) - 1;
+        if (comidaIndex < 0 || comidaIndex >= comidas.size()) {
+            System.out.println("Opción inválida.");
+            return;
+        }
+        String comidaSeleccionada = comidas.get(comidaIndex).getNombre();
+
+        // Menú de bebidas empresariales
+        System.out.println("Bebidas disponibles (puede elegir varias separadas por coma):");
+        List<Drink> bebidas = menuBebidasEmpresarial.getItems();
+        for (int i = 0; i < bebidas.size(); i++) {
+            System.out.println((i + 1) + ". " + bebidas.get(i).getNombre());
+        }
+        System.out.print("Seleccione las bebidas (ej: 1,3): ");
+        String[] indices = sc.nextLine().split(",");
+        List<String> bebidasSeleccionadas = new ArrayList<>();
+        for (String s : indices) {
+            int idx = Integer.parseInt(s.trim()) - 1;
+            if (idx >= 0 && idx < bebidas.size()) {
+                bebidasSeleccionadas.add(bebidas.get(idx).getNombre());
+            }
+        }
+
+        Event evento = new Event("ED-E-03", "Empresarial", 320.0);
+
+        ReservaEmpresarial reserva = new ReservaEmpresarial(cliente, evento, fecha, horaInicio, horaFin,
+                empresa, tematica, vestimenta, postre, personas, comidaSeleccionada, bebidasSeleccionadas);
+
+        reservas.add(reserva);
+        System.out.println("✅ Reserva empresarial creada con ID: " + reserva.getIdReserva());
     }
 
     public void agendarReservaCumple() {
