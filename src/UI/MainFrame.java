@@ -66,19 +66,13 @@ public class MainFrame extends JFrame {
         centerPanel.setBorder(BorderFactory.createEmptyBorder(40, 80, 40, 80));
         
         // Botón de Reservas
-        JButton btnReservas = createMenuButton("GESTIÓN DE RESERVAS", "reservas_icon.png");
+        JButton btnReservas = createMenuButton("GESTIÓN DE RESERVAS", null);
         btnReservas.addActionListener(e -> cardLayout.show(cardPanel, "RESERVAS"));
         
         centerPanel.add(btnReservas);
         
         panel.add(centerPanel, BorderLayout.CENTER);
         
-        // Pie de página
-        JLabel footer = new JLabel("© 2023 Don Cangrejo Enterprises - ¡El dinero nunca duerme!");
-        footer.setFont(new Font("Arial", Font.ITALIC, 12));
-        footer.setHorizontalAlignment(SwingConstants.CENTER);
-        footer.setForeground(new Color(139, 69, 19));
-        panel.add(footer, BorderLayout.SOUTH);
 
         return panel;
     }
@@ -99,17 +93,6 @@ public class MainFrame extends JFrame {
         // Asegurar que el texto siempre es visible
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
-    
-        // Cargar icono si existe
-        try {
-            ImageIcon icon = new ImageIcon(getClass().getResource("../resources/" + iconPath));
-            if (icon.getImage() != null) {
-                button.setIcon(new ImageIcon(icon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH)));
-            }
-        } catch (Exception e) {
-            System.out.println("Icono no encontrado: " + iconPath);
-        }
-
 
         // Cambio de color al pasar el mouse
         button.addMouseListener(new java.awt.event.MouseAdapter() {

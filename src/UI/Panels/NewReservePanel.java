@@ -96,7 +96,6 @@ public class NewReservePanel extends JPanel {
         JButton submitBtn = new JButton("Crear Reserva");
         submitBtn.setBackground(new Color(50, 150, 50));
         submitBtn.setFont(new Font("Arial", Font.BOLD, 16));
-        submitBtn.setForeground(Color.WHITE);
         submitBtn.addActionListener(this::crearReserva);
         
         JPanel buttonPanel = new JPanel();
