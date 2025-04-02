@@ -8,10 +8,14 @@ import java.util.Scanner;
 
 public class ReservaService {
 
+    FoodMenu menuComidaNormal = MenuLoader.getMenuComidaNormal();
+    DrinkMenu menuBebidasNormal = MenuLoader.getMenuBebidasNormal();
+
     private List<Reserva> reservas = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
 
     public void agendarReservaDesdeConsola() {
+
         System.out.println("=== NUEVA RESERVA DE CUMPLEAÑOS ===");
 
         System.out.print("Nombre del cliente: ");
@@ -57,16 +61,27 @@ public class ReservaService {
             return;
         }
 
-       
-        String alimento = "Cangreburguer con Queso";
+        // Menu de la comida para la reserva
+
+        System.out.println("Menú de comidas disponibles:");
+        List<Food> comidas = menuComidaNormal.getItems();
+        for (int i = 0; i < comidas.size(); i++) {
+            System.out.println((i + 1) + ". " + comidas.get(i).getNombre() + " - " + comidas.get(i).getDescripcion());
+        }
+        System.out.print("Seleccione una opción de comida (1-" + comidas.size() + "): ");
+        int comidaIndex = Integer.parseInt(sc.nextLine()) - 1;
+        if (comidaIndex < 0 || comidaIndex >= comidas.size()) {
+            System.out.println("Opción inválida. Reserva cancelada.");
+            return;
+        }
+        Food comidaSeleccionada = comidas.get(comidaIndex);
 
         Event evento = new Event("HBD-E-01", "Cumpleaños", 380.0);
 
         ReservaCumple reserva = new ReservaCumple(cliente, evento, fecha, horaInicio, horaFin,
-                nombreCumple, edadCumple, color, regalo, personas, alimento);
+                nombreCumple, edadCumple, color, regalo, personas, comidaSeleccionada.getNombre());
 
         reservas.add(reserva);
-
         System.out.println("✅ Reserva registrada con éxito con ID: " + reserva.getIdReserva());
     }
 }
