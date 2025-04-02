@@ -1,45 +1,42 @@
 import java.util.Scanner;
 
+import Entities.ReservaService;
+
 public class App {
     public static void main(String[] args) throws Exception {
 
-        Scanner sc = new Scanner(System.in);
+  Scanner sc = new Scanner(System.in);
+        ReservaService servicio = new ReservaService();
         int opcion;
 
         do {
             System.out.println("=== MENÚ PRINCIPAL ===");
-            System.out.println("1. Listar reservas pendientes");
-            System.out.println("2. Listar reservas terminadas");
-            System.out.println("3. Agregar una nueva reserva");
-            System.out.println("4. Salir");
+            System.out.println("1. Agendar reserva de cumpleaños");
+            System.out.println("2. Salir");
             System.out.print("Seleccione una opción: ");
-            
+
             while (!sc.hasNextInt()) {
-                System.out.print("Por favor, ingrese un número: ");
+                System.out.print("Ingrese un número válido: ");
                 sc.next();
             }
 
             opcion = sc.nextInt();
+            sc.nextLine(); // limpiar el buffer
 
             switch (opcion) {
                 case 1:
-                    System.out.println("¡Hola! ¿Cómo estás?");
+                    servicio.agendarReservaDesdeConsola();
                     break;
                 case 2:
-                    System.out.println("Hora actual: " + java.time.LocalTime.now());
-                    break;
-                case 3:
-                    System.out.println("¡Hola! ¿Cómo estás?");
-                    break;
-                case 4:
-                    System.out.println("Saliendo del programa...");
+                    System.out.println("Saliendo del sistema...");
                     break;
                 default:
-                    System.out.println("Opción no válida. Intente de nuevo.");
+                    System.out.println("Opción no válida.");
             }
 
-            System.out.println(); 
-        } while (opcion != 4);
+            System.out.println();
+
+        } while (opcion != 2);
 
         sc.close();
 
