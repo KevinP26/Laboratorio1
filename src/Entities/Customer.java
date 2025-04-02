@@ -1,61 +1,31 @@
 package Entities;
 
 public class Customer {
-    private int customerId;
-    private String Name;
-    private String DUI;
+    private String name;
+    private String dui;
     private int age;
     private String phone;
-    
-    public Customer(int customerId, String name, String dUI, int age, String phone) {
-        this.customerId = customerId;
-        Name = name;
-        DUI = dUI;
+
+    public Customer(String name, String dui, int age, String phone) {
+        this.name = name;
+        this.dui = dui;
         this.age = age;
         this.phone = phone;
     }
 
-    public int getCustumerId() {
-        return customerId;
-    }
-
-    public void setCustumerId(int custumerId) {
-        this.customerId = custumerId;
-    }
-
     public String getName() {
-        return Name;
+        return name;
     }
 
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getDUI() {
-        return DUI;
-    }
-
-    public void setDUI(String dUI) {
-        DUI = dUI;
+    public String getDui() {
+        return dui;
     }
 
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String getPhone() {
         return phone;
     }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    
-    
-    
 }
