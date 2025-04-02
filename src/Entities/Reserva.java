@@ -62,4 +62,10 @@ public abstract class Reserva {
     public void setConcretada(boolean concretada) {
         this.concretada = concretada;
     }
+
+    public void setHoraFin(LocalTime horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    
 }

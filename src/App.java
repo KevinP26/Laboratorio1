@@ -1,11 +1,22 @@
 import java.util.Scanner;
 
-import Entities.ReservaService;
+import javax.swing.SwingUtilities;
+
+//import Entities.ReservaService;
+import UI.MainFrame;
+import Utils.KrabTheme;
 
 public class App {
     public static void main(String[] args) throws Exception {
 
-  Scanner sc = new Scanner(System.in);
+        KrabTheme.applyTheme();
+        
+        // Ejecutar interfaz gráfica
+        SwingUtilities.invokeLater(() -> {
+            MainFrame frame = new MainFrame();
+            frame.setVisible(true);
+        });
+  /*Scanner sc = new Scanner(System.in);
         ReservaService servicio = new ReservaService();
         int opcion;
 
@@ -38,7 +49,9 @@ public class App {
 
         } while (opcion != 2);
 
-        sc.close();
+        sc.close();*/
 
     }
+
+    
 }
