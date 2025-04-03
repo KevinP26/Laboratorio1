@@ -2,23 +2,28 @@ package Entities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ReservaService {
     private List<Reserva> reservas = new ArrayList<>();
+    private Set<String> clientesBaneados = new HashSet<>();
+    private Set<LocalDateTime> reservasExistentes = new HashSet<>();
     
     private FoodMenu menuComidaNormal = MenuLoader.getMenuComidaNormal();
     private DrinkMenu menuBebidasNormal = MenuLoader.getMenuBebidasNormal();
     private FoodMenu menuComidaEmpresarial = MenuLoader.getMenuComidaEmpresarial();
     private DrinkMenu menuBebidasEmpresarial = MenuLoader.getMenuBebidasEmpresarial();
 
-    
     public String crearReservaCumple(Customer cliente, LocalDate fecha, LocalTime horaInicio, 
                                    LocalTime horaFin, String nombreCumple, int edadCumple, 
                                    String color, String regalo, int personas, String comida) {
         try {
+            validarReserva(cliente, fecha, horaInicio);
             validarCantidadPersonas(personas, 50, 75);
             
             Event evento = new Event("HBD-E-01", "Cumpleaños", 380.0);
@@ -26,7 +31,8 @@ public class ReservaService {
                     nombreCumple, edadCumple, color, regalo, personas, comida);
             
             reservas.add(reserva);
-            return "✅ Reserva de cumpleaños creada con ID: " + reserva.getIdReserva();
+            reservasExistentes.add(LocalDateTime.of(fecha, horaInicio));
+            return reserva.getIdReserva();
         } catch (Exception e) {
             throw new RuntimeException("Error al crear reserva: " + e.getMessage());
         }
@@ -36,6 +42,7 @@ public class ReservaService {
                                      LocalTime horaFin, String apellido, int personas, 
                                      String comida, List<String> bebidas) {
         try {
+            validarReserva(cliente, fecha, horaInicio);
             validarCantidadPersonas(personas, 4, 15);
             
             Event evento = new Event("FD-E-04", "Familiar", 200.0);
@@ -43,7 +50,8 @@ public class ReservaService {
                     apellido, personas, comida, bebidas);
             
             reservas.add(reserva);
-            return "✅ Reserva familiar creada con ID: " + reserva.getIdReserva();
+            reservasExistentes.add(LocalDateTime.of(fecha, horaInicio));
+            return reserva.getIdReserva();
         } catch (Exception e) {
             throw new RuntimeException("Error al crear reserva familiar: " + e.getMessage());
         }
@@ -54,6 +62,7 @@ public class ReservaService {
                                         String vestimenta, boolean postre, int personas,
                                         String comida, List<String> bebidas) {
         try {
+            validarReserva(cliente, fecha, horaInicio);
             validarCantidadPersonas(personas, 10, 40);
             
             Event evento = new Event("ED-E-03", "Empresarial", 320.0);
@@ -61,9 +70,30 @@ public class ReservaService {
                     empresa, tematica, vestimenta, postre, personas, comida, bebidas);
             
             reservas.add(reserva);
-            return "✅ Reserva empresarial creada con ID: " + reserva.getIdReserva();
+            reservasExistentes.add(LocalDateTime.of(fecha, horaInicio));
+            return reserva.getIdReserva();
         } catch (Exception e) {
             throw new RuntimeException("Error al crear reserva empresarial: " + e.getMessage());
+        }
+    }
+
+    private void validarReserva(Customer cliente, LocalDate fecha, LocalTime horaInicio) throws Exception {
+        LocalDateTime ahora = LocalDateTime.now();
+        LocalDateTime fechaHoraReserva = LocalDateTime.of(fecha, horaInicio);
+        
+        
+        if (fechaHoraReserva.isBefore(ahora)) {
+            throw new Exception("No se pueden hacer reservas en fechas/horas pasadas");
+        }
+        
+        
+        if (cliente.isBaneado()) {
+            throw new Exception("Cliente baneado por no asistir a reservas anteriores");
+        }
+        
+        
+        if (reservasExistentes.contains(fechaHoraReserva)) {
+            throw new Exception("Ya existe una reserva para esta fecha y hora");
         }
     }
 
@@ -73,7 +103,19 @@ public class ReservaService {
         }
     }
 
-    
+    public void marcarNoAsistencia(String idReserva) {
+        Reserva reserva = buscarReservaPorId(idReserva);
+        if (reserva != null) {
+            String duiCliente = reserva.getCliente().getDui();
+            clientesBaneados.add(duiCliente);
+            reserva.getCliente().setBaneado(true);
+        }
+    }
+
+    public boolean estaClienteBaneado(String duiCliente) {
+        return clientesBaneados.contains(duiCliente);
+    }
+
     public List<Object[]> getDatosReservasPendientes() {
         return reservas.stream()
             .filter(r -> !r.isConcretada())
@@ -100,7 +142,6 @@ public class ReservaService {
         };
     }
 
-    
     public boolean marcarComoCompletada(String idReserva) {
         return reservas.stream()
             .filter(r -> r.getIdReserva().equals(idReserva))
@@ -123,7 +164,6 @@ public class ReservaService {
             .orElse(false);
     }
 
-    
     public List<Food> getMenuComidaNormal() {
         return menuComidaNormal.getItems();
     }
@@ -140,7 +180,6 @@ public class ReservaService {
         return menuBebidasEmpresarial.getItems();
     }
 
-    
     public Reserva buscarReservaPorId(String idReserva) {
         return reservas.stream()
             .filter(r -> r.getIdReserva().equals(idReserva))

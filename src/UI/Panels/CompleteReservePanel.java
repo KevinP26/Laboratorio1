@@ -17,25 +17,28 @@ public class CompleteReservePanel extends JPanel {
         setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        topPanel.setBackground(new Color(240, 248, 255));
+
+        JButton btnActualizar = new JButton("Actualizar");
+        btnActualizar.addActionListener(e -> actualizarTabla());
+
+        topPanel.add(btnActualizar);
+
+        add(topPanel, BorderLayout.NORTH);
+
+        
         tablaReservas = new JTable();
         tablaReservas.setAutoCreateRowSorter(true);
         actualizarTabla();
 
         add(new JScrollPane(tablaReservas), BorderLayout.CENTER);
 
-       
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-
-        JButton btnActualizar = new JButton("Actualizar");
-        btnActualizar.addActionListener(e -> actualizarTabla());
-
-        JButton btnPendientes = new JButton("Ver Reservas Pendientes");
-        btnPendientes.addActionListener(e -> parentPanel.showPanel("PENDIENTES"));
-
-        buttonPanel.add(btnActualizar);
-        buttonPanel.add(btnPendientes);
-
-        add(buttonPanel, BorderLayout.SOUTH);
+        
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBackground(new Color(240, 248, 255));
+        add(bottomPanel, BorderLayout.SOUTH);
     }
 
     private void actualizarTabla() {
@@ -59,7 +62,7 @@ public class CompleteReservePanel extends JPanel {
 
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; 
+                return false;
             }
         };
 

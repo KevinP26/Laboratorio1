@@ -7,6 +7,8 @@ import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -17,7 +19,6 @@ public class NewReservePanel extends JPanel {
     private JPanel dynamicFormPanel;
     private CardLayout formCardLayout;
     
-    
     private JPanel commonFieldsPanel;
     private JTextField clienteNombreField;
     private JTextField clienteDuiField;
@@ -25,7 +26,6 @@ public class NewReservePanel extends JPanel {
     private JTextField clienteTelefonoField;
     private JSpinner fechaSpinner;
     private JSpinner horaInicioSpinner;
-    
     
     private JTextField cumpleNombreField;
     private JTextField cumpleEdadField;
@@ -47,7 +47,6 @@ public class NewReservePanel extends JPanel {
     private JComboBox<String> empresaComidaCombo;
     private JComboBox<String> empresaBebidasCombo;
 
-    
     private static final Pattern DUI_PATTERN = Pattern.compile("^\\d{8}-\\d$");
     private static final Pattern TELEFONO_PATTERN = Pattern.compile("^\\d{4}-\\d{4}$");
 
@@ -57,10 +56,8 @@ public class NewReservePanel extends JPanel {
         setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         
-        
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBorder(BorderFactory.createTitledBorder("Nueva Reserva"));
-        
         
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         topPanel.setBackground(new Color(173, 216, 230));
@@ -73,13 +70,10 @@ public class NewReservePanel extends JPanel {
         
         mainPanel.add(topPanel, BorderLayout.NORTH);
         
-        
         JPanel centerPanel = new JPanel(new BorderLayout(10, 10));
-        
         
         commonFieldsPanel = crearCamposComunes();
         centerPanel.add(commonFieldsPanel, BorderLayout.NORTH);
-        
         
         formCardLayout = new CardLayout();
         dynamicFormPanel = new JPanel(formCardLayout);
@@ -91,7 +85,6 @@ public class NewReservePanel extends JPanel {
         
         centerPanel.add(dynamicFormPanel, BorderLayout.CENTER);
         mainPanel.add(centerPanel, BorderLayout.CENTER);
-        
         
         JButton submitBtn = new JButton("Crear Reserva");
         submitBtn.setBackground(new Color(50, 150, 50));
@@ -105,7 +98,6 @@ public class NewReservePanel extends JPanel {
         
         add(mainPanel, BorderLayout.CENTER);
         
-        
         formCardLayout.show(dynamicFormPanel, "CUMPLE");
     }
 
@@ -113,7 +105,6 @@ public class NewReservePanel extends JPanel {
         JPanel panel = new JPanel(new GridLayout(0, 2, 10, 5));
         panel.setBorder(BorderFactory.createTitledBorder("Información General"));
         panel.setBackground(new Color(240, 248, 255));
-        
         
         panel.add(new JLabel("Nombre del Cliente*:"));
         clienteNombreField = new JTextField();
@@ -131,33 +122,26 @@ public class NewReservePanel extends JPanel {
         clienteTelefonoField = new JTextField();
         panel.add(clienteTelefonoField);
         
-        
         panel.add(new JLabel("Fecha del Evento*:"));
         fechaSpinner = new JSpinner(new SpinnerDateModel());
-        fechaSpinner.setEditor(new JSpinner.DateEditor(fechaSpinner, "dd/MM/yyyy"));
+        JSpinner.DateEditor fechaEditor = new JSpinner.DateEditor(fechaSpinner, "dd/MM/yyyy");
+        fechaSpinner.setEditor(fechaEditor);
+        fechaSpinner.setValue(new Date());
         panel.add(fechaSpinner);
         
         panel.add(new JLabel("Hora de Inicio*:"));
         horaInicioSpinner = new JSpinner(new SpinnerDateModel());
-        horaInicioSpinner.setEditor(new JSpinner.DateEditor(horaInicioSpinner, "HH:mm"));
+        JSpinner.DateEditor horaEditor = new JSpinner.DateEditor(horaInicioSpinner, "HH:mm");
+        horaInicioSpinner.setEditor(horaEditor);
+        horaInicioSpinner.setValue(new Date());
         panel.add(horaInicioSpinner);
         
         return panel;
     }
 
-    private void cambiarFormulario(ActionEvent e) {
-        String tipo = (String) tipoEventoCombo.getSelectedItem();
-        switch (tipo) {
-            case "Cumpleaños": formCardLayout.show(dynamicFormPanel, "CUMPLE"); break;
-            case "Familiar": formCardLayout.show(dynamicFormPanel, "FAMILIAR"); break;
-            case "Empresarial": formCardLayout.show(dynamicFormPanel, "EMPRESARIAL"); break;
-        }
-    }
-
     private JPanel crearFormularioCumple() {
         JPanel panel = new JPanel(new GridLayout(0, 2, 10, 5));
         panel.setBackground(new Color(240, 248, 255));
-        
         
         panel.add(new JLabel("Nombre del Cumpleañero*:"));
         cumpleNombreField = new JTextField();
@@ -193,7 +177,6 @@ public class NewReservePanel extends JPanel {
         JPanel panel = new JPanel(new GridLayout(0, 2, 10, 5));
         panel.setBackground(new Color(240, 248, 255));
         
-        
         panel.add(new JLabel("Apellido Familiar*:"));
         familiarApellidoField = new JTextField();
         panel.add(familiarApellidoField);
@@ -222,7 +205,6 @@ public class NewReservePanel extends JPanel {
     private JPanel crearFormularioEmpresarial() {
         JPanel panel = new JPanel(new GridLayout(0, 2, 10, 5));
         panel.setBackground(new Color(240, 248, 255));
-        
         
         panel.add(new JLabel("Nombre de la Empresa*:"));
         empresaNombreField = new JTextField();
@@ -261,6 +243,15 @@ public class NewReservePanel extends JPanel {
         return panel;
     }
 
+    private void cambiarFormulario(ActionEvent e) {
+        String tipo = (String) tipoEventoCombo.getSelectedItem();
+        switch (tipo) {
+            case "Cumpleaños": formCardLayout.show(dynamicFormPanel, "CUMPLE"); break;
+            case "Familiar": formCardLayout.show(dynamicFormPanel, "FAMILIAR"); break;
+            case "Empresarial": formCardLayout.show(dynamicFormPanel, "EMPRESARIAL"); break;
+        }
+    }
+
     private void crearReserva(ActionEvent e) {
         try {
             
@@ -272,6 +263,7 @@ public class NewReservePanel extends JPanel {
             int edadCliente = Integer.parseInt(clienteEdadField.getText().trim());
             String telefonoCliente = clienteTelefonoField.getText().trim();
             
+            
             LocalDate fecha = ((java.util.Date)fechaSpinner.getValue()).toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
@@ -280,21 +272,37 @@ public class NewReservePanel extends JPanel {
                 .atZone(ZoneId.systemDefault())
                 .toLocalTime();
             
+            
+            LocalDateTime ahora = LocalDateTime.now();
+            LocalDateTime fechaHoraReserva = LocalDateTime.of(fecha, horaInicio);
+            
+            if (fechaHoraReserva.isBefore(ahora)) {
+                throw new Exception("No se pueden hacer reservas en fechas/horas pasadas");
+            }
+            
+            
             Customer cliente = new Customer(nombreCliente, duiCliente, edadCliente, telefonoCliente);
+            if (reservaService.estaClienteBaneado(duiCliente)) {
+                throw new Exception("Cliente baneado por no asistir a reservas anteriores");
+            }
+            
             
             String tipo = (String) tipoEventoCombo.getSelectedItem();
             String numeroReserva = "";
             
             switch (tipo) {
                 case "Cumpleaños":
+                    validarCamposCumple();
                     numeroReserva = procesarCumpleanos(cliente, fecha, horaInicio, null);
                     break;
                     
                 case "Familiar":
+                    validarCamposFamiliar();
                     numeroReserva = procesarFamiliar(cliente, fecha, horaInicio, null);
                     break;
                     
                 case "Empresarial":
+                    validarCamposEmpresarial();
                     numeroReserva = procesarEmpresarial(cliente, fecha, horaInicio, null);
                     break;
             }
@@ -321,18 +329,31 @@ public class NewReservePanel extends JPanel {
     }
     
     private void validarCamposComunes() throws Exception {
+        
         if (clienteNombreField.getText().trim().isEmpty()) {
             throw new Exception("El nombre del cliente es obligatorio");
         }
+        
         
         String dui = clienteDuiField.getText().trim();
         if (dui.isEmpty() || !DUI_PATTERN.matcher(dui).matches()) {
             throw new Exception("DUI es obligatorio (Formato: 12345678-9)");
         }
         
+        
         if (clienteEdadField.getText().trim().isEmpty()) {
             throw new Exception("La edad del cliente es obligatoria");
         }
+        
+        try {
+            int edad = Integer.parseInt(clienteEdadField.getText().trim());
+            if (edad < 18) {
+                throw new Exception("El cliente debe ser mayor de edad");
+            }
+        } catch (NumberFormatException e) {
+            throw new Exception("La edad debe ser un número válido");
+        }
+        
         
         String telefono = clienteTelefonoField.getText().trim();
         if (telefono.isEmpty() || !TELEFONO_PATTERN.matcher(telefono).matches()) {
@@ -340,7 +361,7 @@ public class NewReservePanel extends JPanel {
         }
     }
     
-    private String procesarCumpleanos(Customer cliente, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin) throws Exception {
+    private void validarCamposCumple() throws Exception {
         if (cumpleNombreField.getText().trim().isEmpty()) {
             throw new Exception("El nombre del cumpleañero es obligatorio");
         }
@@ -353,7 +374,33 @@ public class NewReservePanel extends JPanel {
         if (cumpleRegaloField.getText().trim().isEmpty()) {
             throw new Exception("El tipo de regalo es obligatorio");
         }
-        
+    }
+    
+    private void validarCamposFamiliar() throws Exception {
+        if (familiarApellidoField.getText().trim().isEmpty()) {
+            throw new Exception("El apellido familiar es obligatorio");
+        }
+        if (familiarBebidasCombo.getSelectedItem() == null) {
+            throw new Exception("Debe seleccionar una bebida");
+        }
+    }
+    
+    private void validarCamposEmpresarial() throws Exception {
+        if (empresaNombreField.getText().trim().isEmpty()) {
+            throw new Exception("El nombre de la empresa es obligatorio");
+        }
+        if (empresaTematicaField.getText().trim().isEmpty()) {
+            throw new Exception("La temática del evento es obligatoria");
+        }
+        if (empresaVestimentaField.getText().trim().isEmpty()) {
+            throw new Exception("El código de vestimenta es obligatorio");
+        }
+        if (empresaBebidasCombo.getSelectedItem() == null) {
+            throw new Exception("Debe seleccionar una bebida");
+        }
+    }
+    
+    private String procesarCumpleanos(Customer cliente, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin) throws Exception {
         String nombreCumple = cumpleNombreField.getText().trim();
         int edadCumple = Integer.parseInt(cumpleEdadField.getText().trim());
         String color = cumpleColorField.getText().trim();
@@ -369,13 +416,6 @@ public class NewReservePanel extends JPanel {
     }
     
     private String procesarFamiliar(Customer cliente, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin) throws Exception {
-        if (familiarApellidoField.getText().trim().isEmpty()) {
-            throw new Exception("El apellido familiar es obligatorio");
-        }
-        if (familiarBebidasCombo.getSelectedItem() == null) {
-            throw new Exception("Debe seleccionar una bebida");
-        }
-        
         String apellido = familiarApellidoField.getText().trim();
         int personasFamiliar = (int) familiarPersonasSpinner.getValue();
         String comidaFamiliar = (String) familiarComidaCombo.getSelectedItem();
@@ -388,19 +428,6 @@ public class NewReservePanel extends JPanel {
     }
     
     private String procesarEmpresarial(Customer cliente, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin) throws Exception {
-        if (empresaNombreField.getText().trim().isEmpty()) {
-            throw new Exception("El nombre de la empresa es obligatorio");
-        }
-        if (empresaTematicaField.getText().trim().isEmpty()) {
-            throw new Exception("La temática del evento es obligatoria");
-        }
-        if (empresaVestimentaField.getText().trim().isEmpty()) {
-            throw new Exception("El código de vestimenta es obligatorio");
-        }
-        if (empresaBebidasCombo.getSelectedItem() == null) {
-            throw new Exception("Debe seleccionar una bebida");
-        }
-        
         String empresa = empresaNombreField.getText().trim();
         String tematica = empresaTematicaField.getText().trim();
         String vestimenta = empresaVestimentaField.getText().trim();
@@ -423,7 +450,7 @@ public class NewReservePanel extends JPanel {
         clienteEdadField.setText("");
         clienteTelefonoField.setText("");
         
-       
+        
         fechaSpinner.setValue(new java.util.Date());
         horaInicioSpinner.setValue(new java.util.Date());
         
