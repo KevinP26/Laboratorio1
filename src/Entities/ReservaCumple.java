@@ -23,5 +23,5 @@ public class ReservaCumple extends Reserva {
         this.alimento = alimento;
     }
 
-    // Getters opcionales si necesitás mostrar datos
+   
 }

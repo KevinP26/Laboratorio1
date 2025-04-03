@@ -1,6 +1,8 @@
 package UI.Panels;
 
 import Entities.*;
+import Utils.ReservaService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

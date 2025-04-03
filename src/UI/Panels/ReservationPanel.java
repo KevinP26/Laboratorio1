@@ -2,8 +2,10 @@
 package UI.Panels;
 
 
-import Entities.ReservaService;
 import javax.swing.*;
+
+import Utils.ReservaService;
+
 import java.awt.*;
 
 public class ReservationPanel extends JPanel {

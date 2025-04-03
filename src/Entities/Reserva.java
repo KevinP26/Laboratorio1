@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import Utils.ReservaUtils;
+
 public abstract class Reserva {
     protected String idReserva;
     protected Customer cliente;
@@ -20,15 +22,7 @@ public abstract class Reserva {
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.concretada = false;
-        this.idReserva = generarId(); // genera ID único al crear la reserva
-    }
-
-    private String generarId() {
-        int numero = (int) (Math.random() * 99 + 1); // Número entre 1 y 99
-        char letra1 = (char) ('A' + (int) (Math.random() * 26));
-        char letra2 = (char) ('A' + (int) (Math.random() * 26));
-        String fechaStr = fecha.format(DateTimeFormatter.ofPattern("ddMMyyyy"));
-        return String.format("KB-%02dT%c%c-%s", numero, letra1, letra2, fechaStr);
+        this.idReserva = ReservaUtils.generarId(fecha);  // genera ID único al crear la reserva
     }
 
     public String getIdReserva() {

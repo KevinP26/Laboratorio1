@@ -1,4 +1,4 @@
-package Entities;
+package Utils;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -8,6 +8,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import Entities.Customer;
+import Entities.Drink;
+import Entities.DrinkMenu;
+import Entities.Event;
+import Entities.Food;
+import Entities.FoodMenu;
+import Entities.MenuLoader;
+import Entities.Reserva;
+import Entities.ReservaCumple;
+import Entities.ReservaEmpresarial;
+import Entities.ReservaFamiliar;
 
 public class ReservaService {
     private List<Reserva> reservas = new ArrayList<>();
